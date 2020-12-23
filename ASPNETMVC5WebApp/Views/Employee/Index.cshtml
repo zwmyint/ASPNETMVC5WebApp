@@ -1,0 +1,53 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Employee (using - @ViewBag.VIndexName)</h2>
+
+<h2>List Detail</h2>
+
+<div>
+	<table class="table table-bordered table-hover">
+		<tr class="btn-primary">
+			<td>Emp ID</td>
+			<td>Name</td>
+			<td>Address</td>
+			<td>Date of Joining</td>
+			<td>Marital Status</td>
+			<td>Is Eligible for Loan</td>
+			<td>Salary</td>
+			<td>Created By</td>
+			<td>Created Date</td>
+			<td>Action</td>
+		</tr>
+		@foreach (var employee in ViewBag.Employees)
+		{
+			<tr>
+				<td>@employee.EmployeeID</td>
+				<td>@employee.EmployeeName</td>
+				<td>@employee.Address</td>
+				<td>@employee.DateofJoining</td>
+				<td>
+					@if (employee.MaritalStatus == 1)
+					{
+						<p>Married</p>
+					}
+					else
+					{
+						<p>Single</p>
+					}
+				</td>
+				<td>@employee.IsEligibleForloan</td>
+				<td>@employee.Salary</td>
+				<td>@employee.CreatedBy</td>
+				<td>@employee.CreatedDate</td>
+				<td>
+					<button type="button" class="btn btn-primary btn-sm">Edit</button> |
+					<button type="button" class="btn btn-danger btn-sm">Delete</button>
+				</td>
+			</tr>
+		}
+
+	</table>
+</div>

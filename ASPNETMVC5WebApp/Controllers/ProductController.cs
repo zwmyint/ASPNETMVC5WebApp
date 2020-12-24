@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,7 +13,7 @@ namespace ASPNETMVC5WebApp.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
+        // GET: Product (empty)
         public ActionResult CreateProduct()
         {
             //
@@ -138,7 +139,6 @@ namespace ASPNETMVC5WebApp.Controllers
             
         }
 
-
         // Edit Product Action
         public ActionResult Edit(int? id)
         {
@@ -198,11 +198,11 @@ namespace ASPNETMVC5WebApp.Controllers
             //
         }
 
-
         // Delete Product Action
         public ActionResult Delete(int? id)
         {
             if (id == null) return HttpNotFound();
+            //if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             using (SqlConnection conn = new SqlConnection(Config_Connection.GetConnection()))
             {
@@ -242,7 +242,6 @@ namespace ASPNETMVC5WebApp.Controllers
             List<Product> products = GetProducts("sp_SearchProductByName", searchkeyword);
             return View("GetAllProduct", products);
         }
-
 
         // used from GetAllProduct and SearchProduct
         public List<Product> GetProducts(string sp_name, string searchkeyword)
@@ -301,7 +300,6 @@ namespace ASPNETMVC5WebApp.Controllers
 
             return products;
         }
-
 
         //
 

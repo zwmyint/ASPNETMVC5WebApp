@@ -22,52 +22,53 @@ namespace ASPNETMVC5WebApp.Controllers
         // GET: Product List
         public ActionResult GetAllProduct()
         {
-            //
-            List<Product> products = new List<Product>();
+            // "sp_GetAllProduct"
+            List<Product> products = GetProducts("sp_GetAllProduct", null);
 
-            using (SqlConnection conn = new SqlConnection(Config_Connection.GetConnection()))
-            {
-                //string sql_str = "SELECT * FROM tbl_product ORDER BY Id DESC";
+            //List<Product> products = new List<Product>();
 
-                using (SqlCommand cmd = new SqlCommand("sp_GetAllProduct", conn)) //sql_str
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
+            //using (SqlConnection conn = new SqlConnection(Config_Connection.GetConnection()))
+            //{
+            //    //string sql_str = "SELECT * FROM tbl_product ORDER BY Id DESC";
 
-                    if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+            //    using (SqlCommand cmd = new SqlCommand("sp_GetAllProduct", conn)) //sql_str
+            //    {
+            //        cmd.CommandType = CommandType.StoredProcedure;
 
-                    try
-                    {
-                        SqlDataReader dr = cmd.ExecuteReader();
-                        DataTable dtProducts = new DataTable();
-                        dtProducts.Load(dr);
+            //        if (conn.State != System.Data.ConnectionState.Open) conn.Open();
 
-                        foreach (DataRow row in dtProducts.Rows)
-                        {
-                            products.Add(new Product
-                            {
-                                Id = Convert.ToInt32(row["Id"]),
-                                ProductName = row["ProductName"].ToString(),
-                                Price = Convert.ToDecimal(row["Price"]),
-                                Supplier = row["Supplier"].ToString()
-                            });
-                        }
-                        //
-                    }
-                    catch (Exception ex)
-                    {
-                        //
+            //        try
+            //        {
+            //            SqlDataReader dr = cmd.ExecuteReader();
+            //            DataTable dtProducts = new DataTable();
+            //            dtProducts.Load(dr);
 
-                    }
-                    finally
-                    {
-                        conn.Close();
-                        conn.Dispose();
-                    }
+            //            foreach (DataRow row in dtProducts.Rows)
+            //            {
+            //                products.Add(new Product
+            //                {
+            //                    Id = Convert.ToInt32(row["Id"]),
+            //                    ProductName = row["ProductName"].ToString(),
+            //                    Price = Convert.ToDecimal(row["Price"]),
+            //                    Supplier = row["Supplier"].ToString()
+            //                });
+            //            }
+            //            //
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            //
 
+            //        }
+            //        finally
+            //        {
+            //            conn.Close();
+            //            conn.Dispose();
+            //        }
+            
+            //    }
 
-                }
-
-            }
+            //}
 
             return View(products);
         }
@@ -77,55 +78,64 @@ namespace ASPNETMVC5WebApp.Controllers
         public ActionResult CreateProduct(Product product)
         {
             //
-            //string sql_str_insert = "INSERT INTO tbl_product (ProductName, Price, Supplier) ";
-            //sql_str_insert += "VALUES ('" + product.ProductName + "', " + product.Price + ", '" + product.Supplier + "')";
-
-            //string sql_str_update = "UPDATE tbl_product SET ProductName = '" + product.ProductName + "', ";
-            //sql_str_update += "Price = " + product.Price + ", Supplier = '" + product.Supplier + "' ";
-            //sql_str_update += "WHERE Id = " + product.Id + " ";
-
-            //string sql_str = "";
-
-            using (SqlConnection conn = new SqlConnection(Config_Connection.GetConnection()))
+            if (ModelState.IsValid)
             {
+                //
+                //string sql_str_insert = "INSERT INTO tbl_product (ProductName, Price, Supplier) ";
+                //sql_str_insert += "VALUES ('" + product.ProductName + "', " + product.Price + ", '" + product.Supplier + "')";
 
-                //using (SqlCommand cmd = new SqlCommand((product.Id > 0) ? sql_str_update : sql_str_insert, conn))
-                using (SqlCommand cmd = new SqlCommand("sp_InsertOrUpdate", conn))
+                //string sql_str_update = "UPDATE tbl_product SET ProductName = '" + product.ProductName + "', ";
+                //sql_str_update += "Price = " + product.Price + ", Supplier = '" + product.Supplier + "' ";
+                //sql_str_update += "WHERE Id = " + product.Id + " ";
+
+                //string sql_str = "";
+
+                using (SqlConnection conn = new SqlConnection(Config_Connection.GetConnection()))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Id", product.Id);
-                    cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
-                    cmd.Parameters.AddWithValue("@Price", product.Price);
-                    cmd.Parameters.AddWithValue("@Supplier", product.Supplier);
 
-                    if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+                    //using (SqlCommand cmd = new SqlCommand((product.Id > 0) ? sql_str_update : sql_str_insert, conn))
+                    using (SqlCommand cmd = new SqlCommand("sp_InsertOrUpdate", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Id", product.Id);
+                        cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                        cmd.Parameters.AddWithValue("@Price", product.Price);
+                        cmd.Parameters.AddWithValue("@Supplier", product.Supplier);
 
-                    SqlTransaction sqlTransaction = conn.BeginTransaction();
-                    cmd.Connection = conn;
-                    cmd.Transaction = sqlTransaction;
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        sqlTransaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
+                        if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+
+                        SqlTransaction sqlTransaction = conn.BeginTransaction();
+                        cmd.Connection = conn;
+                        cmd.Transaction = sqlTransaction;
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+                            sqlTransaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            //
+                            sqlTransaction.Rollback();
+                        }
+                        finally
+                        {
+                            conn.Close();
+                            conn.Dispose();
+                        }
                         //
-                        sqlTransaction.Rollback();
                     }
-                    finally
-                    {
-                        conn.Close();
-                        conn.Dispose();
-                    }
-                    //
+
                 }
 
+                //return View();
+                //return Content("Record is Saved in the Product Table.");
+                return RedirectToAction("GetAllProduct");
+                //
             }
 
-            //return View();
-            //return Content("Record is Saved in the Product Table.");
-            return RedirectToAction("GetAllProduct");
+            return View("CreateProduct");
+            //
+            
         }
 
 
@@ -226,6 +236,72 @@ namespace ASPNETMVC5WebApp.Controllers
             //
         }
 
+        public ActionResult SearchProduct(string searchkeyword)
+        {
+            // "sp_GetAllProduct"
+            List<Product> products = GetProducts("sp_SearchProductByName", searchkeyword);
+            return View("GetAllProduct", products);
+        }
+
+
+        // used from GetAllProduct and SearchProduct
+        public List<Product> GetProducts(string sp_name, string searchkeyword)
+        {
+            //
+            List<Product> products = new List<Product>();
+
+            using (SqlConnection conn = new SqlConnection(Config_Connection.GetConnection()))
+            {
+                //string sql_str = "SELECT * FROM tbl_product ORDER BY Id DESC";
+
+                using (SqlCommand cmd = new SqlCommand(sp_name, conn)) //sql_str
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    if (searchkeyword != null)
+                    {
+                        cmd.Parameters.AddWithValue("@Filter", searchkeyword);
+                    }
+
+                    if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+
+                    try
+                    {
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        DataTable dtProducts = new DataTable();
+                        dtProducts.Load(dr);
+
+                        foreach (DataRow row in dtProducts.Rows)
+                        {
+                            products.Add(new Product
+                            {
+                                Id = Convert.ToInt32(row["Id"]),
+                                ProductName = row["ProductName"].ToString(),
+                                Price = Convert.ToDecimal(row["Price"]),
+                                Supplier = row["Supplier"].ToString()
+                            });
+                        }
+                        //
+                    }
+                    catch (Exception ex)
+                    {
+                        //
+
+                    }
+                    finally
+                    {
+                        conn.Close();
+                        conn.Dispose();
+                    }
+
+
+                }
+
+            }
+
+            return products;
+        }
+
 
         //
 
@@ -289,5 +365,17 @@ namespace ASPNETMVC5WebApp.Controllers
 //AS
 //BEGIN
 //    SELECT* FROM tbl_product WHERE Id = @Id
+//END
+//GO
+
+
+//CREATE PROCEDURE sp_SearchProductByName
+//@Filter nvarchar(50)
+//AS
+//BEGIN
+// --SELECT* FROM tbl_product WHERE ProductName = @Filter
+// SELECT* FROM tbl_product
+// WHERE ProductName LIKE '%' + @Filter + '%' 
+// ORDER BY Id DESC
 //END
 //GO

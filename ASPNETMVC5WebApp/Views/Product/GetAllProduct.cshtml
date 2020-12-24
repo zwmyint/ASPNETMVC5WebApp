@@ -6,8 +6,28 @@
 
 <h2>All Product</h2>
 
+@using (Html.BeginForm("SearchProduct", "Product", FormMethod.Get))
+{
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label>Search : </label>
+				<div class="input-group">
+					<div class="input-group-btn">
+						<input type="text" class="form-control" id="id_search" name="searchkeyword" />
+						<input type="submit" value="Search" class="btn btn-success" />
+						@Html.ActionLink("Create New", "CreateProduct", "Product", new { @class = "btn btn-primary" })
+						@Html.ActionLink("Get All Product", "GetAllProduct", "Product", new { @class = "btn btn-primary" })
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+}
+
 <p>
-	@Html.ActionLink("Create New", "CreateProduct", "Product",new { @class = "btn btn-primary"})
+	
 </p>
 <table class="table table-bordered table-hover">
     <tr>

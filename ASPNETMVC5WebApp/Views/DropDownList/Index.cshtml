@@ -1,0 +1,170 @@
+﻿@model ASPNETMVC5WebApp.Models.MySkills
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<style>
+	table, th, td {
+		border: 1px solid black;
+		padding: 15px;
+	}
+
+	thead {
+		background-color: skyblue;
+		color: white;
+	}
+</style>
+
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		$.ajax({
+			url: "ReturnJSONDataToAJax",
+			type: "GET",
+			contentType: "application/json; charset=utf-8",
+			datatype: JSON,
+			success: function (result) {
+				$(result).each(function () {
+					$("#FromJson").append($("<option></option>").val(this.ID).html(this.Name));
+				});
+			},
+			error: function (data) { }
+		});
+	});
+
+</script>
+
+@*https://www.c-sharpcorner.com/article/different-ways-bind-the-value-to-razor-dropdownlist-in-aspnet-mvc5/*@
+
+<h2>Index</h2>
+
+<div>
+
+	@{
+		List<SelectListItem> listItems = new List<SelectListItem>();
+		listItems.Add(new SelectListItem
+		{
+			Text = "ASP.NET MVC",
+			Value = "1"
+		});
+		listItems.Add(new SelectListItem
+		{
+			Text = "ASP.NET WEB API",
+			Value = "2",
+			Selected = true
+		});
+		listItems.Add(new SelectListItem
+		{
+			Text = "DOCUSIGN",
+			Value = "3"
+		});
+		listItems.Add(new SelectListItem
+		{
+			Text = "C#",
+			Value = "4"
+		});
+	}
+	<table>
+		<thead>
+			<tr>
+				<td>Binding Way</td>
+				<td>DropdownList</td>
+			</tr>
+		</thead>
+		<tr>
+			<td> Populating With Hardcoded Data</td>
+			<td>
+				@Html.DropDownList("MySkills", new List<SelectListItem>
+				{
+				new SelectListItem{ Text="ASP.NET MVC", Value = "1" },
+				new SelectListItem{ Text="ASP.NET WEB API", Value = "2" },
+				new SelectListItem{ Text="ENTITY FRAMEWORK", Value = "3" },
+				new SelectListItem{ Text="DOCUSIGN", Value = "4" },
+				new SelectListItem{ Text="ORCHARD CMS", Value = "5" },
+				new SelectListItem{ Text="JQUERY", Value = "6" },
+				new SelectListItem{ Text="ZENDESK", Value = "7" },
+				new SelectListItem{ Text="LINQ", Value = "8" },
+				new SelectListItem{ Text="C#", Value = "9" },
+				new SelectListItem{ Text="GOOGLE ANALYTICS", Value = "10" },
+				})
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With ViewBag Data
+			</td>
+			<td>
+				@Html.DropDownList("MySkills", (IEnumerable<SelectListItem>)ViewBag.MySkills)
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With ViewData Data
+			</td>
+			<td>
+				@Html.DropDownList("MySkills", (IEnumerable<SelectListItem>)ViewData["MySkills"])
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With TempData Data
+			</td>
+			<td>
+				@Html.DropDownList("MySkills", (IEnumerable<SelectListItem>)TempData["MySkills"])
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With Jquery Data
+			</td>
+			<td>
+				@Html.DropDownList("MySkills", (IEnumerable<SelectListItem>)TempData["MySkills"])
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating From Enum
+			</td>
+			<td>
+				@Html.DropDownList("MySkills", new SelectList(ViewBag.MySkillEnum, "Value", "Text"))
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With Database and EF
+			</td>
+			<td>
+				@Html.DropDownList("MySkills", (IEnumerable<SelectListItem>)ViewData["DBMySkills"])
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With Json Data
+			</td>
+			<td>
+				@Html.DropDownList("FromJson", new SelectList(Enumerable.Empty<SelectListItem>()))
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With Model Data
+			</td>
+			<td>
+				@*@Html.DropDownList("FromModel", Model.Skills)*@
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Populating With Global static Data
+			</td>
+			<td>
+				@Html.DropDownList("StaticData", listItems)
+			</td>
+		</tr>
+	</table>
+
+</div>
+
+

@@ -1,1 +1,6 @@
 ﻿ASP.NET MVC 5 Application with Framework version 4.8
+
+
+
+// added EntityFramework-EF 6 (nuget package)
+

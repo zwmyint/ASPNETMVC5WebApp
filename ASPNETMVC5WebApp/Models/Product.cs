@@ -15,6 +15,8 @@ namespace ASPNETMVC5WebApp.Models
         [StringLength(150,ErrorMessage ="Product Name should be less than 150 characters long.")]
         public string ProductName{ get; set; }
 
+        public string CategoryName { get; set; }
+
         [Required(ErrorMessage = "Product Price is Required.")]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }

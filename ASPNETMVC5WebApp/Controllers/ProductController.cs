@@ -236,6 +236,7 @@ namespace ASPNETMVC5WebApp.Controllers
             //
         }
 
+        // Search Product
         public ActionResult SearchProduct(string searchkeyword)
         {
             // "sp_GetAllProduct"

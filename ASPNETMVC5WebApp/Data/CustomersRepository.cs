@@ -73,7 +73,33 @@ namespace ASPNETMVC5WebApp.Data
         }
 
         //
+        public bool SaveCustomer(CustomerEditViewModel customeredit)
+        {
+            if (customeredit != null)
+            {
+                //using (var context = new ApplicationDbContext())
+                //{
+                //    if (Guid.TryParse(customeredit.CustomerID, out Guid newGuid))
+                //    {
+                //        var customer = new Customer()
+                //        {
+                //            CustomerID = newGuid,
+                //            CustomerName = customeredit.CustomerName,
+                //            CountryIso3 = customeredit.SelectedCountryIso3,
+                //            RegionCode = customeredit.SelectedRegionCode
+                //        };
+                //        customer.Country = context.Countries.Find(customeredit.SelectedCountryIso3);
+                //        customer.Region = context.Regions.Find(customeredit.SelectedRegionCode);
 
+                //        context.Customers.Add(customer);
+                //        context.SaveChanges();
+                //        return true;
+                //    }
+                //}
+            }
+            // Return false if customeredit == null or CustomerID is not a guid
+            return false;
+        }
 
         //
         public List<Customer> GetAllCustomer(string Iso3, string RegionCode)

@@ -1,4 +1,5 @@
 ﻿using ASPNETMVC5WebApp.Data;
+using ASPNETMVC5WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,32 @@ namespace ASPNETMVC5WebApp.Controllers
             return View(customer);
         }
 
+
+        // POST: Customer/Create
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "CustomerID, CustomerName, SelectedCountryIso3, SelectedRegionCode")] CustomerEditViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var repo = new CustomersRepository();
+                    bool saved = repo.SaveCustomer(model);
+                    if (saved)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                // Handling model state errors is beyond the scope of the demo, 
+                // so just throwing an ApplicationException when the ModelState is invalid
+                // and rethrowing it in the catch block.
+                throw new ApplicationException("Invalid model");
+            }
+            catch (ApplicationException ex)
+            {
+                throw ex;
+            }
+        }
 
         //
     }

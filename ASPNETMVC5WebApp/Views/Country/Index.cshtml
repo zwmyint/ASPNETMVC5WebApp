@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ASPNETMVC5WebApp.Models.Country>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<h2>Country List</h2>
+
+<p>
+	@*@Html.ActionLink("Create New", "Create")*@
+	<button type="button" class="modal-link btn btn-primary" data-toggle="modal" data-target="#modal-container">
+		New Country
+	</button>
+</p>
+
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Your title</h4>
+			</div>
+			<div class="modal-body">
+				<h3>Country Info:</h3>
+				<h3>Country Info:</h3>
+			</div>
+			<div class="modal-footer">
+				<div class="btn-group">
+					<button type="button" class="modal-link btn btn-primary" id="btnsave">
+						Save Country
+					</button>
+					<button type="button" class="modal-link btn btn-danger" id="btnCancel">
+						Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<table class="table table-bordered table-hover">
+	<tr class="btn-primary">
+		<th>
+			@Html.DisplayNameFor(model => model.Iso3)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.CountryNameEnglish)
+		</th>
+		<th>Action</th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Iso3)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.CountryNameEnglish)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { id = item.Iso3 }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.Iso3 })
+			</td>
+		</tr>
+	}
+
+</table>
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		//
+
+		//alert("aaaa");
+
+		$("#btnCancel").click(function () {
+			$("#modal-container").modal('hide');
+		});  
+
+	});
+</script>

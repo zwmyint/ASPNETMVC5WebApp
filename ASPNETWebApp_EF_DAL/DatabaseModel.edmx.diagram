@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3dce9c3127a34aac9f7fdeac73092a89" Name="Diagram1">
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.Batch" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.Category" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.Product" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.ProductStock" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.RolePermission" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.Sale" Width="1.5" PointX="5.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.SalesDetail" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.tbl_country" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.tbl_customer" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.tbl_product" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.tbl_region" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.User" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETWebApp_EF_DAL.tbl_category" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="ASPNETWebApp_EF_DAL.FK_ProductStock_Batch" ManuallyRouted="false" />
+        <AssociationConnector Association="ASPNETWebApp_EF_DAL.FK_Product_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="ASPNETWebApp_EF_DAL.FK_ProductQuantity_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="ASPNETWebApp_EF_DAL.FK_SalesDetail_Sale" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

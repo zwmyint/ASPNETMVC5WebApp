@@ -16,6 +16,18 @@ namespace ASPNETMVC5WebApp.Controllers
         public ActionResult CreateCategory()
         {
             //
+
+            //Creating generic list
+            List<SelectListItem> ObjList = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "Status 1", Value = "1" },
+                new SelectListItem { Text = "Status 2", Value = "2" }
+
+            };
+            //Assigning generic list to ViewBag
+            ViewBag.CategoryStatus = ObjList;
+
+
             return View(new Category { Id = 0 });
         }
 
